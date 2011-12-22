@@ -26,20 +26,20 @@ class BoardView extends View {
 	final int COLUMN_NUM = 15;	 //15*15
 	int mColumnWidth = 0;
 
-	int[][] mStoneGrid = null; //ëŒ ì •ë³´
+	int[][] mStoneGrid = null; //µ¹ Á¤º¸
 	int mStoneColor = Color.BLACK;
 
 	Paint mPnt = null;
 
-	//1. BoardViewì— í„°ì¹˜ê°€ ë°œìƒí•˜ë©´ í„°ì¹˜ëœ ì¢Œí‘œì— ëŒì´ ê·¸ë ¤ì§€ë„ë¡  
-	//		í„°ì¹˜ëœ ì¢Œí‘œì— í•´ë‹¹í•˜ëŠ” mStoneGrid[][] ê°’ì„ ëŒìƒ‰ìœ¼ë¡œ ì„¤ì •
-	//2. í„°ì¹˜ì‹œ í‘ìƒ‰ê³¼ ë°±ìƒ‰ ëŒì´ ë²ˆê°ˆì•„ ê·¸ë ¤ì§€ë„ë¡
-	//3. í„°ì¹˜ì‹œ ê¸°ì¡´ì— ëŒì´ ì´ë¯¸ ì¡´ìž¬í•˜ë˜ ê³³ì—ëŠ” ê·¸ë ¤ì§€ì§€ ì•Šë„ë¡
-	//4. ê²Œìž„ì´ ëë‚¬ëŠ”ì§€ ê²€ì‚¬ (ìŠ¹ìž ì¶œë ¥ ë° ìž¬ì‹œìž‘/ì¢…ë£Œ)
+	//1. BoardView¿¡ ÅÍÄ¡°¡ ¹ß»ýÇÏ¸é ÅÍÄ¡µÈ ÁÂÇ¥¿¡ µ¹ÀÌ ±×·ÁÁöµµ·Ï  
+	//		ÅÍÄ¡µÈ ÁÂÇ¥¿¡ ÇØ´çÇÏ´Â mStoneGrid[][] °ªÀ» µ¹»öÀ¸·Î ¼³Á¤
+	//2. ÅÍÄ¡½Ã Èæ»ö°ú ¹é»ö µ¹ÀÌ ¹ø°¥¾Æ ±×·ÁÁöµµ·Ï
+	//3. ÅÍÄ¡½Ã ±âÁ¸¿¡ µ¹ÀÌ ÀÌ¹Ì Á¸ÀçÇÏ´ø °÷¿¡´Â ±×·ÁÁöÁö ¾Êµµ·Ï
+	//4. °ÔÀÓÀÌ ³¡³µ´ÂÁö °Ë»ç (½ÂÀÚ Ãâ·Â ¹× Àç½ÃÀÛ/Á¾·á)
 	
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		mColumnWidth = (w<h?w:h)/COLUMN_NUM; //í•œì¹¸ì˜ ë„ˆë¹„ ê³„ì‚° 
+		mColumnWidth = (w<h?w:h)/COLUMN_NUM; //ÇÑÄ­ÀÇ ³Êºñ °è»ê 
 		// TODO Auto-generated method stub
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
@@ -48,18 +48,18 @@ class BoardView extends View {
 	protected void onDraw(Canvas canvas) {
 		int x=0, y=0;
 		int midx=0, midy=0;
-		canvas.drawColor(Color.YELLOW); //ë°”íƒ•ìƒ‰ ì¹ í•˜ê¸°
-		mPnt.setColor(Color.BLACK); //ì„ ìƒ‰
+		canvas.drawColor(Color.YELLOW); //¹ÙÅÁ»ö Ä¥ÇÏ±â
+		mPnt.setColor(Color.BLACK); //¼±»ö
 		for (y=0;y<COLUMN_NUM;y++){
 			midy = mColumnWidth*y+mColumnWidth/2;
 			for (x=0;x<COLUMN_NUM;x++){
 				midx = mColumnWidth*x+mColumnWidth/2;
-				canvas.drawLine(midx, mColumnWidth*y, midx, mColumnWidth*(y+1), mPnt);//ì„¸ë¡œì„  ê·¸ë¦¬ê¸°
-				canvas.drawLine(mColumnWidth*x, midy, mColumnWidth*(x+1), midy, mPnt);//ê°€ë¡œì„  ê·¸ë¦¬ê¸°
+				canvas.drawLine(midx, mColumnWidth*y, midx, mColumnWidth*(y+1), mPnt);//¼¼·Î¼± ±×¸®±â
+				canvas.drawLine(mColumnWidth*x, midy, mColumnWidth*(x+1), midy, mPnt);//°¡·Î¼± ±×¸®±â
 				if (mStoneGrid[x][y]!=0) { 
-					mPnt.setColor(mStoneGrid[x][y]); //ëŒìƒ‰
-					canvas.drawCircle(midx, midy, mColumnWidth/2, mPnt); //ëŒ ê·¸ë¦¬ê¸°
-					mPnt.setColor(Color.BLACK); //ì„ ìƒ‰
+					mPnt.setColor(mStoneGrid[x][y]); //µ¹»ö
+					canvas.drawCircle(midx, midy, mColumnWidth/2, mPnt); //µ¹ ±×¸®±â
+					mPnt.setColor(Color.BLACK); //¼±»ö
 				}
 			}
 		}
@@ -70,14 +70,14 @@ class BoardView extends View {
 	public BoardView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		mStoneGrid = new int[COLUMN_NUM][COLUMN_NUM];  //ëŒ ì •ë³´ë¥¼ ì €ìž¥í•  2ì°¨ì› ë°°ì—´
+		mStoneGrid = new int[COLUMN_NUM][COLUMN_NUM];  //µ¹ Á¤º¸¸¦ ÀúÀåÇÒ 2Â÷¿ø ¹è¿­
 		
-		mPnt = new Paint(); //ì„ ê³¼ ëŒì„ ê·¸ë¦¬ê¸° ìœ„í•œ íŽ˜ì¸íŠ¸ ìƒì„± ë° ì„¤ì •
+		mPnt = new Paint(); //¼±°ú µ¹À» ±×¸®±â À§ÇÑ ÆäÀÎÆ® »ý¼º ¹× ¼³Á¤
 		mPnt.setStrokeWidth(3);
 		mPnt.setStyle(Paint.Style.FILL);
-		for (int x=0;x<COLUMN_NUM;x++) //ëŒ ì •ë³´ë¥¼ ì €ìž¥í•  2ì°¨ì› ë°°ì—´ ì´ˆê¸°í™”
+		for (int x=0;x<COLUMN_NUM;x++) //µ¹ Á¤º¸¸¦ ÀúÀåÇÒ 2Â÷¿ø ¹è¿­ ÃÊ±âÈ­
 			for (int y=0;y<COLUMN_NUM;y++)
-				mStoneGrid[x][y]=0; //ëŒì´ ì—†ëŠ” ì¹¸
+				mStoneGrid[x][y]=0; //µ¹ÀÌ ¾ø´Â Ä­
 	}
 
 	public BoardView(Context context, AttributeSet attrs) {
